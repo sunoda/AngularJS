@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
+    <title>ng-repeat</title>
+</head>
+
+<body>
+    <div ng-app='myApp' ng-controller='RepeatController as repeat'>
+      <ul >
+        <li ng-repeat='item in repeat.array' style="list-style-type: decimal-leading-zero;">
+           武器 : {{ item.name }}，攻擊 : {{ item.atk }}，價錢 : {{ item.price}} 元
+        </li>
+      </ul>
+    </div>
+    <script>
+     (function(){
+       let app = angular.module('myApp', []);
+
+       app.controller('RepeatController', function(){
+         this.array = [{
+           name : '木劍',
+           atk : 20,
+           price : 300
+         },{
+           name : '鐵劍',
+           atk : 40,
+           price : 800
+         },{
+           name : '超合金劍',
+           atk : 60,
+           price : 1500
+         },{
+           name : '傳說大劍',
+           atk : 100,
+           price : 3500
+         }];
+       })
+     })();   
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module Separate & Combine</title>
+</head>
+
+<body>
+    <div ng-controller="bookController">
+        {{ data }}
+    </div>
+
+    <div ng-controller="penController">
+        {{ data }}
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
+    <script>
+        (function(){
+            let book = angular.module('book', []);
+            book.controller('bookController', ['$scope', function($scope){
+                $scope.data = 'This is a book!';
+            }]);
+
+            let pen = angular.module('pen', []);
+            pen.controller('penController', ['$scope', function($scope){
+                $scope.data = 'This is a pen!';
+            }]);
+
+            let app = angular.module('myApp', ['book', 'pen']);
+        })();
+    </script>
+</body>
+
+</html>

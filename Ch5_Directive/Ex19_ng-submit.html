@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
+  <title>Expressions</title>
+</head>
+
+<body>
+  <div ng-app='myApp' ng-controller='AngularController as angular'>
+    <form ng-submit='angular.submit()'>
+      <label>紅藥水</label>
+      請輸入購買數量 :
+      <input type="text" ng-model='angular.red'>
+      <br>
+      <label>藍藥水</label>
+      請輸入購買數量 :
+      <input type="text" ng-model='angular.blue'>
+      <br>
+      <input type="submit" value="購買">
+    </form>
+    <p ng-repeat='item in angular.items'>
+      物品:
+      <br>
+      紅藥水{{ item.red }} 瓶, 藍藥水 {{ item.blue}} 瓶
+    </p>
+  </div>
+  <script>
+    (function () {
+      let app = angular.module('myApp', []);
+
+      app.controller('AngularController', function () {
+        this.items = [];
+        this.red = 0;
+        this.blue = 0;
+        this.submit = function () {
+          if (this.items.length == 0) {
+            this.items.push({
+              red: +this.red,
+              blue: +this.blue
+            })
+          } else {
+            console.log((this.items[0]))
+            this.items[0].red += +this.red;
+            this.items[0].blue += +this.blue;
+          }
+        }
+      })
+    })();
+  </script>
+</body>
+
+</html>

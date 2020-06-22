@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
+    <title>Controller this inherit</title>
+</head>
+
+<body>
+    <div ng-controller='ParentController as parent'>
+        This is a {{ parent.data }}
+        <br> parent.data:
+        <input type="text" ng-model='parent.data'>
+        <hr>
+
+        <div ng-controller='ChildController as child'>
+            This is a {{ child.data }}
+            <br>child.data:
+            <input type="text" ng-model='child.data'>
+            <hr>
+        </div>
+    </div>
+    <script>
+        (function(){
+            let app = angular.module('myApp', []);
+
+            app.controller('ParentController', [function(){
+                this.data = "Parent!";
+            }])
+            app.controller('ChildController', [function(){
+                
+            }])
+        })();
+    </script>
+</body>
+
+</html>

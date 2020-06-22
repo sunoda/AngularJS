@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
+    <title>ng-change</title>
+</head>
+
+<body>
+    <div ng-app='myApp' ng-controller='AngularController as angular'>
+        輸入數字 :
+        <input type="text" ng-model='angular.num' ng-change='angular.count()' />
+        <p>計算結果 : {{ angular.result }}</p>
+    </div>
+    <script>
+        (function(){
+            let app = angular.module('myApp', []);
+
+            app.controller('AngularController', function(){
+                this.num = 0;
+                this.count = function(){
+                    this.result = this.num * 2;
+                };
+            });
+        })();
+    </script>
+</body>
+
+</html>

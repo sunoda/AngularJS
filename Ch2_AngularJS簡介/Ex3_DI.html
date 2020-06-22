@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dependency Injection</title>
+</head>
+
+<body>
+    <div ng-controller='MainController'>
+        {{ NameService.name }}
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
+    <script>
+        (function(){
+            let app = angular.module('myApp', []);
+            app.service('WorldService', function(){
+                this.name = 'World';
+            })
+
+            app.service('JackService', function(){
+                this.name = 'Jack';
+            })
+            // 
+            // app.controller('MainController',['WorldService', function(NameService){
+            //     console.log(NameService.name);
+            // }]);
+            app.controller('MainController',['JackService', function(NameService){
+                console.log(NameService.name);
+            }]);
+        })();
+    </script>
+</body>
+
+</html>

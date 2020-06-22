@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
+    <title>ng-options_select as label for value in array</title>
+</head>
+
+<body>
+    <div ng-app='myApp' ng-controller='AngularController as angular'>
+      <select name="options" 
+              ng-model='angular.select' 
+              ng-options="item.name as item.name + ' -- ' + item.price for item in angular.myOptions">
+        <option value = "">--請選擇--</option>
+      </select>
+      {{ angular.select }}
+    </div>
+    <script>
+      (function(){
+        let app = angular.module('myApp', []);
+
+        app.controller('AngularController', function(){
+          this.myOptions = [{
+            type: '武器',
+            name: '木劍',
+            price: 500
+          },{
+            type: '武器',
+            name: '鐵劍',
+            price: 1000
+          },{
+            type: '盔甲',
+            name: '木盔甲',
+            price: 500
+          },{
+            type: '盔甲',
+            name: '鐵盔甲',
+            price: 1000
+          }];
+          // this.select = ''
+        })
+      })();
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
+    <title>Controller this</title>
+</head>
+
+<body>
+    <!-- Directive Controller name Alias -->
+    <div ng-controller='MainController as main'>
+        Hello, {{ main.data }}
+        <br>
+        <input type="text" ng-model='main.data'>
+    </div>
+    <script>
+        (function(){
+            let app = angular.module('myApp', []);
+
+            app.controller('MainController', [function(){
+                this.data = 'world!'
+            }])
+        })();
+    </script>
+</body>
+
+</html>

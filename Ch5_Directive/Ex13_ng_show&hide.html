@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
+    <title>ng-show & ng-hide</title>
+</head>
+
+<body>
+    <div ng-app='myApp' ng-controller='AngularController as angular'>
+      <div ng-show='angular.isTrue'>這是ng-show為true的畫面</div>
+      <div ng-show='angular.isFalse'>這是ng-show為false的畫面</div>
+      <div ng-hide='angular.isTrue'>這是ng-hide為true的畫面</div>
+      <div ng-hide='angular.isFalse'>這是ng-hide為false的畫面</div>
+    </div>
+    <script>
+    (function(){
+      let app = angular.module('myApp', []);
+
+      app.controller('AngularController', function(){
+        this.isTrue = true;
+        this.isFalse = false;
+      })
+    })();
+    </script>
+</body>
+
+</html>

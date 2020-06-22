@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
+    <title>ng-class</title>
+    <style>
+      .red {
+        color: red;
+      }
+
+      .border {
+        width: 200px;
+        border: 1px solid #000;
+      }
+    </style>
+</head>
+
+<body>
+    <div ng-app='myApp' ng-controller="AngularController as angular">
+      <div ng-class="{'color': angular.isFalse, 'border': angular.isTrue}">
+        color 為 true 時套用樣式 color, border 為 true 時套用樣式 border
+      </div>
+      <div ng-class="{'color': angular.isTrue, 'border': angular.isFalse}">
+        color 為 true 時套用樣式 color, border 為 false 時沒有邊框
+      </div>
+    </div>
+    <script>
+    (function(){
+      let app = angular.module('myApp', []);
+
+      app.controller('AngularController', function(){
+        this.isTrue = true;
+        this.isFalse = false;
+      })
+    })();
+    </script>
+</body>
+
+</html>
