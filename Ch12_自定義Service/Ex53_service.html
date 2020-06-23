@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
+    <title>Expressions</title>
+</head>
+
+<body>
+    <div ng-app='myApp' ng-controller='AngularController'>
+      
+    </div>
+    <script>
+      (function(){
+        let app = angular.module('myApp', []);
+        app.service('myService', function(){
+          this.name = "主角",
+          this.job = "戰士", 
+          this.attack = function(){
+            console.log('造成十點傷害');
+          }
+        })
+
+        app.factory('myFactory', function(){
+          // private 區域
+          let value = Math.random();
+          return {
+            name: '傑克',
+            job: '法師',
+            attack: function(){
+              console.log('造成十點傷害');
+            }
+          }
+        });
+
+        app.controller('AngularController', ['$scope','myService','myFactory', function($scope, myService, myFactory) {
+          $scope.character = myService;
+          $scope.partner = myFactory;
+          console.log($scope);
+          $scope.character.attack();
+          $scope.partner.attack();
+        }])
+      })();
+    </script>
+</body>
+
+</html>

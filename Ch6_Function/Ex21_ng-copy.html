@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
+    <title>ng-copy</title>
+</head>
+
+<body>
+    <div ng-app='myApp'>
+      <div ng-controller='CopyController'>
+        <form novalidate class="simple-form">
+          名字 : <input type="text" ng-model="user.name"> <br>
+          性別 : <input type="radio" ng-model="user.gender" value="male">Male
+                 <input type="radio" ng-model="user.gender" value="female">Female <br>
+          <button ng-click="save(user)">儲存</button>
+          <button ng-click="reset()">復原</button>
+        </form>
+        <pre>form = {{ user | json }}</pre>
+        <pre>thesame = {{ thesame | json }}</pre>
+      </div>
+    </div>
+    <script>
+      (function(){
+        let app = angular.module('myApp', []);
+
+        app.controller('CopyController', ['$scope', function($scope){
+          let self = $scope;
+          self.thesame = {};
+          // 傳址 (記憶體位置)
+          // self.save = user => {
+          //   self.thesame = user
+          // }
+          // 傳值 (複製資料到不同記憶體位置)
+          self.save = user => {
+            self.thesame = angular.copy(user);
+          };
+          self.reset = () => {
+            angular.copy(self.thesame, self.user);
+          };
+          self.reset();
+        }])
+      })();
+    </script>
+</body>
+
+</html>

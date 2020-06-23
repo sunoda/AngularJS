@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
-  <title>ng-submit this</title>
+  <title>ng-submit $scope</title>
 </head>
 
 <body>
@@ -21,35 +21,35 @@
       <br>
       <input type="submit" value="購買">
     </form>
-    <p ng-repeat='item in angular.items'>
+    <p ng-repeat='item in items'>
       物品:
       <br>
-      紅藥水{{ item.red }} 瓶, 藍藥水 {{ item.blue}} 瓶
+      紅藥水{{ item.red }} 瓶, 藍藥水 {{ item.blue }} 瓶
     </p>
   </div>
   <script>
     (function () {
       let app = angular.module('myApp', []);
-      // 建議使用 $scope , this 的狀態容易被改變，避免使用。
-      // 單純 function 在 代入參數 如 function($scope) 的情況下
-      // 經過 minify 之後 js 會有問題。
-      app.controller('AngularController', function () {
-        this.items = [];
-        this.red = 0;
-        this.blue = 0;
+
+      app.controller('AngularController', ['$scope', function ($scope) {
+        $scope.items = [];
+        $scope.red = 0;
+        $scope.blue = 0;
+        // console.log($scope.items)
         this.submit = function () {
-          if (this.items.length == 0) {
-            this.items.push({
+          if ($scope.items.length == 0) {
+            $scope.items.push({
               red: +this.red,
               blue: +this.blue
             })
+            console.log($scope)
           } else {
-            console.log((this.items[0]))
-            this.items[0].red += +this.red;
-            this.items[0].blue += +this.blue;
+            console.log(($scope.items[0]))
+            $scope.items[0].red += +this.red;
+            $scope.items[0].blue += +this.blue;
           }
         }
-      })
+      }])
     })();
   </script>
 </body>

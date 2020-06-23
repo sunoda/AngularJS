@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
+    <title>自定義 Directive</title>
+</head>
+
+<body>
+    <div ng-app='myApp'>
+      <div directive-attr></div>
+
+      <directive-elm></directive-elm>
+      
+      <div>
+        <div class='directive-class'></div>
+      </div>
+    </div>
+    <script>
+      (function(){
+        let app = angular.module('myApp', []);
+        // 名稱命名規則必須使用小駝峰，如 directiveAttr
+        // 呼叫方式為 大寫字母前加入 '-' 並轉成小寫
+      
+        app.directive('自訂名稱', function(){
+          return {
+            // 此為自訂 directive 的寫法
+            // 此區間自訂所需的 Option
+          }
+        })
+
+        app.directive('directiveAttr', function(){
+          return {
+            restrict: 'A', // Attribute 屬性
+            // 其餘設定
+          }
+        })
+
+        app.directive('directiveElm', function(){
+          return {
+            restrict: 'E', // Element 屬性
+            // 其餘設定
+          }
+        })
+
+        app.directive('directiveClass', function(){
+          return {
+            restrict: 'C', // Class 屬性
+            // 其餘設定
+          }
+        })
+
+        app.directive('directiveMulti', function(){
+          return {
+            restrict: 'EA', // 可同時使用 element 與 attribute 的方式操作 directive
+            // 其餘設定
+          }
+        })
+      })();
+    </script>
+</body>
+
+</html>

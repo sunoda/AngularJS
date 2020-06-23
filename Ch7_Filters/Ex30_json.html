@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
+  <title>json</title>
+</head>
+
+<body>
+  <div ng-app='myApp'>
+    <div ng-controller='FilterController'>
+      <pre> {{ data }} </pre>
+      <pre> {{ data | json}} </pre>
+    </div>
+  </div>
+  <script>
+    (function () {
+      let app = angular.module('myApp', []);
+
+      app.controller('FilterController', ['$scope', function ($scope) {
+        let self = $scope;
+          self.data = [{
+            id: 123,
+            name: 456,
+            title: 789
+          },{
+            id: 456,
+            name: 456,
+            title: 789
+          },{
+            id: 789,
+            name: 456,
+            title: 789
+          }];
+      }]);
+
+    })();
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
+  <title>date</title>
+</head>
+
+<body>
+  <div ng-app='myApp'>
+    <div ng-controller='FilterController'>
+      Date Time : {{ Dtime | date }} <br>
+      Date Time : {{ Dtime | date:"yyyy/MM/dd hh:mm:ss"}}
+      <!-- yyyy:年, MM:月, dd:日, 大小寫有差別 -->
+    </div>
+  </div>
+  <script>
+    (function () {
+      let app = angular.module('myApp', []);
+
+      app.controller('FilterController', ['$scope', function ($scope) {
+        let self = $scope;
+        self.Dtime = new Date ().getTime();
+      }]);
+
+    })();
+  </script>
+</body>
+
+</html>

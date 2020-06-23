@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
+    <title>ng-form (nest form)</title>
+</head>
+
+<body>
+    <div ng-app='myApp' ng-controller='AngularController as angular'>
+      <form ng-submit='angular.submit()'>
+        <ng-form ng-repeat='item in items'>
+          ID:
+          <input type="text" ng-model='item.id'>
+          <br>
+          暱稱:
+          <input type="text" ng-model='item.name'>
+          <br>
+        </ng-form>
+        <input type="submit" value='新增' ng-click='addItem()'>
+        <input type="submit" value="儲存" ng-click='submit()'>
+      </form>
+      {{ items }}
+      <p ng-repeat='item in items'></p>
+    </div>
+    <script>
+      (function(){
+        let app = angular.module('myApp', []);
+
+        app.controller('AngularController', ['$scope', function($scope){
+          $scope.items = [{
+            id: '',
+            name: ''
+          }];
+
+          $scope.submit = function() {
+            console.log($scope.items);
+          }
+
+          $scope.addItem = function() {
+            $scope.items.push({
+              id: '',
+              name: ''
+            })
+          }
+        }])
+      })();
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
+  <title>currency</title>
+</head>
+
+<body>
+  <div ng-app='myApp'>
+    <div ng-controller='FilterController'>
+      Cost1 no currency : {{ Cost1 }} <br>
+      Cost1 as currency : {{ Cost1 | currency }} <br>
+      Cost1 as currency : {{ Cost1 | currency:"NT$":0}}
+    </div>
+  </div>
+  <script>
+    (function () {
+      let app = angular.module('myApp', []);
+
+      app.controller('FilterController', ['$scope', function ($scope) {
+        let self = $scope;
+        self.Cost1 = 1000;
+      }]);
+
+    })();
+  </script>
+</body>
+
+</html>

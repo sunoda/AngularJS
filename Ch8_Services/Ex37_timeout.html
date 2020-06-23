@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
+    <title>timeout</title>
+</head>
+
+<body>
+    <div ng-app='myApp' ng-controller='AngularController'>
+      {{ count }}
+      <button ng-click=counter()>START</button>
+      <button ng-click=stop()>STOP</button>
+    </div>
+    <script>
+      (function(){
+        let app = angular.module('myApp', []);
+
+        app.controller('AngularController', ['$scope', '$timeout', function($scope, $timeout){
+          let self = $scope;
+          self.count = 0;
+          // 計數器功能
+          self.counter = function() {
+            // 避免累加呼叫
+            self.stop();
+            self.count++;
+            // 重複呼叫
+            self.timeout = $timeout(self.counter, 1000);
+          }
+          // 啟動計數器
+          self.timeout = $timeout(self.counter, 1000);
+          // 停止計數器
+          self.stop = function(){
+            $timeout.cancel(self.timeout);
+          }
+        }])
+      })();
+    </script>
+</body>
+
+</html>

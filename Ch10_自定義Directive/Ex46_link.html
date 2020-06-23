@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
+    <title>link</title>
+</head>
+
+<body>
+    <div ng-app='myApp'>
+      <directive-hello></directive-hello>
+      <!-- <directive-hello content="早安!"></directive-hello> -->
+    </div>
+    <script>
+      (function(){
+        let app = angular.module('myApp', []);
+        app.directive('directiveHello', function(){
+          return {
+            restrict:'E',
+            template: '<input type="text" ng-model="name" />' + 
+                      '<div>{{ hi }} , {{ name }} <br/> {{ content }} </div>',
+            link: function(scope, element, attrs) {
+              scope.hi = 'Hello',
+              scope.name = (scope.name === undefined) ? ('輸入 Name ') : (scope.name);
+              let c = (attrs.content === undefined) ? ('您無輸入屬性') : (attrs.content);
+              scope.content = c;
+            }
+          }
+        })
+      })();
+    </script>
+</body>
+
+</html>

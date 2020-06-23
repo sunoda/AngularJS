@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
+    <title>transclude</title>
+</head>
+
+<body>
+    <div ng-app='myApp'>
+      <directive-hello>Hello, </directive-hello>
+      
+    </div>
+    <script>
+      (function(){
+        let app = angular.module('myApp', []);
+        app.directive('directiveHello', function(){
+          return {
+            restrict:'E',
+            template: '<div><span ng-transclude></span>transclude</div>',
+            priority: 1, // 定義 Directive 優先順序, 數字越小越優先
+            replace: false, //為 true 時，不顯示 directive tag
+            transclude: true  // 為 true 時可以把 HTML 原本內容移動到 template 定義的元素內
+          }
+        })
+      })();
+    </script>
+</body>
+
+</html>

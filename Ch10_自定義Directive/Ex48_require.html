@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
+    <title>require</title>
+</head>
+
+<body>
+    <div ng-app='myApp'>
+      <directive-hello></directive-hello>
+    </div>
+    <script>
+      (function(){
+        let app = angular.module('myApp', []);
+        app.directive('directiveHello', function(){
+          return {
+            restrict:'E',
+            template: '<directive-test></directive-test>',
+            controller: function(){
+              this.hi = 'Hello';
+            }
+          }
+        })
+
+        app.directive('directiveTest', function(){
+          return {
+            require: '^directiveHello',
+            restrict:'E',
+            template: '<div>{{ hello }}</div>',
+            link: function(scope, elm, attrs, hello) {
+              scope.hello = hello.hi
+            }
+          }
+        })
+      })();
+    </script>
+</body>
+
+</html>

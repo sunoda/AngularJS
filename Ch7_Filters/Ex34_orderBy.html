@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
+  <title>orderBy</title>
+</head>
+
+<body>
+  <div ng-app='myApp'>
+    <div ng-controller='FilterController'>
+      <span>search : Name</span><input ng-model='search.name'> <br>
+      <span>search : Age</span><input ng-model='search.age'>
+      <table class="friend">
+        <tr>
+          <th>Name</th>
+          <th>Age</th>
+        </tr>
+        <!-- 小到大 -->
+        <tr ng-repeat="friend in friends | filter:search | orderBy:'age'">
+          <td>{{friend.name}}</td>
+          <td>{{friend.age}}</td>
+        </tr>
+      </table>
+
+      <table class="friend">
+        <tr>
+          <th>Name</th>
+          <th>Age</th>
+        </tr>
+        <!-- 大到小 -->
+        <tr ng-repeat="friend in friends | filter:search | orderBy:'-age'">
+          <td>{{friend.name}}</td>
+          <td>{{friend.age}}</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <script>
+    (function () {
+      let app = angular.module('myApp', []);
+
+      app.controller('FilterController', ['$scope', function ($scope) {
+        $scope.friends = [{
+          name: 'John',
+          age: 10
+        },{
+          name: 'Eric',
+          age: 35
+        },{
+          name: 'Mary',
+          age: 29
+        },]
+      }]);
+    })();
+  </script>
+</body>
+
+</html>

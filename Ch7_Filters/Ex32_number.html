@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
+  <title>number</title>
+</head>
+
+<body>
+  <div ng-app='myApp'>
+    <div ng-controller='FilterController'>
+      num1 as number : {{ num1 | number }} <br>
+      num1 as number : {{ num1 | number:1 }} <br>
+      num2 as number : {{ num2 | number:2 }}
+    </div>
+  </div>
+  <script>
+    (function () {
+      let app = angular.module('myApp', []);
+
+      app.controller('FilterController', ['$scope', function ($scope) {
+        $scope.num1 = 100;
+        $scope.num2 = 1000;
+      }]);
+
+    })();
+  </script>
+</body>
+
+</html>

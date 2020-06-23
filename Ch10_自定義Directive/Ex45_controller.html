@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
+    <title>controller</title>
+</head>
+
+<body>
+    <div ng-app='myApp'>
+      <directive-hello>Hello, </directive-hello>
+      <directive-hell>Hello, </directive-hell>
+    </div>
+    <script>
+      (function(){
+        let app = angular.module('myApp', []);
+        app.directive('directiveHello', function(){
+          return {
+            restrict:'E',
+            template: '<div>{{ hi }} , test </div>',
+            priority: 1, // 定義 Directive 優先順序, 數字越小越優先
+            controller: function($scope) {
+              $scope.hi = '你好';
+            }
+          }
+        })
+        // 代入現有的 controller 執行
+        app.directive('directiveHell', function(){
+          return {
+            restrict:'E',
+            template: '<div>{{ hi }}, {{ money }}</div>',
+            priority: 1, // 定義 Directive 優先順序, 數字越小越優先
+            controllerAs: 'hello',
+            controller: 'HellController'
+          }
+        })
+        
+        app.controller('HellController', ['$scope', $scope => {
+          $scope.hi = 'Hello'
+          $scope.money = 'rich man'
+        }])
+      })();
+    </script>
+</body>
+
+</html>

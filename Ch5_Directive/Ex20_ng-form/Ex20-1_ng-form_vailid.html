@@ -4,12 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
-    <title>Expressions</title>
+    <title>ng-form 表單驗證</title>
 </head>
 
 <body>
     <div ng-app='myApp' ng-controller='AngularController as angular'>
-      
+      <form name='form1' ng-submit='submit()'>
+        帳號:
+        <input type="text" name="account" ng-model="accountData" ng-minlength="3" ng-maxlength="5" required>
+        <p>{{ form1.account.$error }}</p>
+        <p>required: {{ form1.account.$error.required }}</p>
+        <p>required: {{ form1.account.$error.minlength }}</p>
+        <p>required: {{ form1.account.$error.maxlength }}</p>
+      </form>
     </div>
     <script>
       (function(){

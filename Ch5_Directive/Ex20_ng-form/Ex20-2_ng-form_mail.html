@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
+    <title>ng-form E-mail驗證</title>
+    <style>
+      /* 當不符合 email 格式顯示紅框 */
+      input.ng-invalid-email {
+        border: 2px solid red;
+      }
+      /* 當驗證成功顯示綠框 */
+      input.ng-valid {
+        border: 2px solid green;
+      }
+      /* 當輸入過資料且未通過驗證顯示粉紅色背景 */
+      input.ng-dirty.ng-invalid {
+        background: pink;
+      }
+    </style>
+</head>
+
+<body>
+    <div ng-app='myApp' ng-controller='AngularController as angular'>
+      <form name="form1">
+        E-mail:
+        <input type="email" name="email" ng-model="emailData" required>
+        <span ng-show="form1.email.$error.email">E-mail格式錯誤</span>
+      </form>
+    </div>
+    <script>
+      (function(){
+        let app = angular.module('myApp', []);
+
+        app.controller('AngularController', ['$scope', function($scope){
+
+        }])
+      })();
+    </script>
+</body>
+
+</html>

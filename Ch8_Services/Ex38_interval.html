@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
+    <title>interval</title>
+</head>
+
+<body>
+    <div ng-app='myApp' ng-controller='AngularController'>
+      {{ count }}
+      <!-- <button ng-click=counter()>START</button> -->
+      <button ng-click=stop()>STOP</button>
+    </div>
+    <script>
+      (function(){
+        let app = angular.module('myApp', []);
+
+        app.controller('AngularController', ['$scope', '$interval', function($scope, $interval){
+          let self = $scope;
+          self.count = 0;
+          // 計數器功能
+          self.counter = function() {
+            self.count++;
+          }
+          // 啟動計數器
+          self.interval = $interval(self.counter, 1000);
+          // 停止計數器
+          self.stop = function(){
+            $interval.cancel(self.interval);
+          }
+        }])
+      })();
+    </script>
+</body>
+
+</html>

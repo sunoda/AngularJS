@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
+    <title>$http</title>
+</head>
+
+<body>
+    <div ng-app='myApp' ng-controller='AngularController'>
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>City</th>
+            <th>Country</th>
+          </tr>
+        </thead>
+        <tbody ng-repeat='data in data'>
+          <tr>
+            <td>{{ data.Name}}</td>
+            <td>{{ data.City}}</td>
+            <td>{{ data.Country}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <script>
+      (function(){
+        let app = angular.module('myApp', []);
+
+        app.controller('AngularController', ['$http', '$scope', function($http, $scope){
+          let self = $scope;
+          self.url = 'https://cors-anywhere.herokuapp.com/http://www.w3schools.com/angular/customers.php';
+          // 本地端 render 有 CORS 問題
+          // 使用 cors anywhere : https://cors-anywhere.herokuapp.com/
+          $http.get(self.url).then(function(res) {
+            self.data = res.data.records;
+            console.log(self.data);
+          }, function(err) {
+            console.log(err);
+          })
+        }])
+      })();
+    </script>
+</body>
+
+</html>

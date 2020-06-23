@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
+    <title>priority</title>
+</head>
+
+<body>
+    <div ng-app='myApp'>
+      <directive-hello></directive-hello>
+      <directive-hell></directive-hell>
+    </div>
+    <script>
+      (function(){
+        let app = angular.module('myApp', []);
+        app.directive('directiveHello', function(){
+          return {
+            restrict:'E',
+            template: '<div>replace is false</div>',
+            priority: 1, // 定義 Directive 優先順序, 數字越小越優先
+            replace: false //或不輸入 replace
+          }
+        })
+
+        app.directive('directiveHell', function(){
+          return {
+            restrict:'E',
+            template: '<div>replace is true</div>',
+            priority: 1, // 定義 Directive 優先順序, 數字越小越優先
+            replace: true //不會顯示出 directive 的 tag
+          }
+        })
+      })();
+    </script>
+</body>
+
+</html>

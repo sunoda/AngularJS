@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
+    <title>民國轉換</title>
+</head>
+
+<body>
+    <div ng-app='myApp' ng-controller='FilterController'>
+      請輸入日期 :
+      <input type="date" ng-model='date' />
+      <div>
+        輸入的日期 = {{ date | date: "yyyy/MM/dd" }}
+      </div>
+      輸入的日期 = {{ date | dateToRoc }}
+
+    </div>
+    <script>
+      (function(){
+        let app = angular.module('myApp', []);
+
+        app.controller('FilterController', ['$scope', function($scope){
+          $scope.date = new Date(); //設定 date 等於 現在日期
+        }])
+
+        app.filter('dateToRoc', function(){
+          return function(date) {  // date 是傳進來的資料
+            // 取得 date  的年，然後 -1911
+            let Year = (date.getFullYear() - 1911).toString();
+            let Month = (date.getMonth() + 1).toString();
+            let Day = date.getDate().toString();
+
+            return '民過' + Year + '年 ' + Month + '月 ' + Day + '日'
+          }
+        })
+      })();
+    </script>
+</body>
+
+</html>

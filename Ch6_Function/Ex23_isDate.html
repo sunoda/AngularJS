@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
-    <title>Expressions</title>
+    <title>angular.isDate</title>
 </head>
 
 <body>
-    <div ng-app='myApp' ng-controller='AngularController as angular'>
+    <div ng-app='myApp' ng-controller='AngularController'>
       
     </div>
     <script>
@@ -16,7 +16,11 @@
         let app = angular.module('myApp', []);
 
         app.controller('AngularController', ['$scope', function($scope){
-
+          let ct = angular.isDate('123456');
+          let dt = angular.isDate(new Date());
+          console.log(ct);
+          console.log(dt);
+          
         }])
       })();
     </script>
