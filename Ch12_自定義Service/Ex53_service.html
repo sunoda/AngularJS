@@ -14,6 +14,7 @@
     <script>
       (function(){
         let app = angular.module('myApp', []);
+
         app.service('myService', function(){
           this.name = "主角",
           this.job = "戰士", 
@@ -25,6 +26,7 @@
         app.factory('myFactory', function(){
           // private 區域
           let value = Math.random();
+          // 只會回傳以下區域
           return {
             name: '傑克',
             job: '法師',
@@ -37,7 +39,7 @@
         app.controller('AngularController', ['$scope','myService','myFactory', function($scope, myService, myFactory) {
           $scope.character = myService;
           $scope.partner = myFactory;
-          console.log($scope);
+          console.log($scope.character, $scope.partner)
           $scope.character.attack();
           $scope.partner.attack();
         }])

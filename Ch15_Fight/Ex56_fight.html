@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html ng-app='app'>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+    integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
+  <title>Create Role</title>
+  <style>
+    .main {
+      width: 60%;
+      padding: 100px 0 0 0;
+      margin: auto;
+    }
+  </style>
+</head>
+
+<body>
+  <div ng-controller='GameController' class="main">
+    <!-- 選擇角色 -->
+    <table class="table" ng-hide='isBattle'>
+      <tr>
+        <td>角色名稱</td>
+        <td>職業</td>
+        <td>功能</td>
+      </tr>
+      <tr ng-repeat='character in characters'>
+        <td> {{ character.name }} </td>
+        <td> {{ character.job | keyToName:job }} </td>
+        <td>
+          <!-- 點選選擇角色 -->
+          <a class="btn btn-primary" ng-click="chooseFighter(character)">
+            選擇
+          </a>
+        </td>
+      </tr>
+    </table>
+    <!-- 開始對戰就隱藏按鈕 -->
+  <a class="btn btn-warning" ng-click="battle()" ng-hide="isBattle">與魔王對戰</a>
+  <div ng-show='isBattle'>
+    <div class="col-xs-3">
+      英雄 : {{ fighter.name }}
+      <br>
+      血量 : {{ fighter.hp }}
+      <br>
+      <!-- 角色或魔王死亡時隱藏 -->
+      <a class='btn btn-info' ng-hide='isDead' ng-click='fight(0, fighter)'>普通攻擊</a>
+      <a class='btn btn-info' ng-hide='isDead' ng-click='fight(1, fighter)'>特殊攻擊</a>
+    </div>
+    <div class="col-xs-6">
+      <!-- 角色或魔王死亡時顯示 -->
+      <a class='btn btn-danger' ng-show='isDead' ng-click='reFight()'>重新挑戰</a>
+      <p ng-repeat='text in fightText'>{{ text.text }}</p>
+    </div>
+
+    <div class="col-xs-3">
+      最終 : {{ boss.name }}
+      <br>
+      血量 : {{ boss.hp }}
+    </div>
+  </div>
+
+  </div>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+    integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+    crossorigin="anonymous"></script>
+  <script src="./Ex56_fight.js"></script>
+</body>
+
+</html>

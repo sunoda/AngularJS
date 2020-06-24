@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html ng-app='CRUD'>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+    integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
+  <title>Create Role</title>
+  <style>
+    .main{
+      width: 60%;
+      padding: 100px 0 0 0;
+      margin: auto;
+    }
+  </style>
+</head>
+<body>
+  <div ng-controller='RoleController' class="main">
+    
+    <div ng-controller='AbilityController'>
+      <!-- 列表模式就顯示 -->
+      <div ng-show='object.isList'>
+        <label for="searchName">搜索名字 : </label>
+        <input type="text" name="searchName" ng-model='searchObj.name' />
+        <!-- 新增時傳入 ability.init 跨 controller 進行能力預設 -->
+        <button type="button" class="btn btn-info" ng-click='goNew(init)'>新增角色</button>
+        <table class="table">
+          <tr>
+            <th>#</th>
+            <th>編號</th>
+            <th>名稱</th>
+            <th>能力值</th>
+            <th>新增時間</th>
+            <th></th>
+          </tr>
+          <!-- 角色列表由 ID 排序, 並且可由輸入值 role.searchObj 進行篩選 -->
+          <tr ng-repeat='item in object.dataList'>
+            <td> {{ $index + 1}} </td>
+            <td> {{ item.id }} </td>
+            <td> {{ item.name }} </td>
+            <td>
+              <div> 力量 :  {{ item.ability.strength }} </div>
+              <div> 體力 :  {{ item.ability.vitality }} </div>
+              <div> 敏捷 :  {{ item.ability.agility }} </div>
+              <div> 智慧 :  {{ item.ability.wisdom }} </div>
+            </td>
+            <td> {{item.createdTime | date: 'yyyy-MM-dd HH:mm:ss' }} </td>
+            <td>
+              <!-- 修改十傳入ability.init 跨 controller 進行能力預設 -->
+              <button type="button" class="btn btn-info" ng-click='goEdit(item, init)'>修改</button>
+              <button type="button" class="btn btn-danger" ng-click='delete(item)'>刪除</button>
+            </td> 
+          </tr>
+        </table>
+      </div>
+      <!-- 編輯模式時顯示 -->
+      <div ng-hide='object.isList'>
+        <!-- 儲存時將能力值傳入儲存 -->
+        <form ng-submit='submit(ability)'>
+          <div class="form-group">
+            <label for="id">編號</label>
+            <input type="text" class="form-control" ng-model='object.editData.id' readonly>
+          </div>
+          <div class="form-group">
+            <label for="name">名稱</label>
+            <input type="text" class="form-control" ng-model='object.editData.name'>
+          </div>
+          <div class="form-group">
+            <label for="name">能力值</label>
+            <span>剩餘點數 : {{ maxAbility }} </span>
+            <div>
+              <label for="id">力量</label>
+              <div class="input-group">
+                <input type="text" class="form-control" ng-model='ability.strength' readonly>
+                <div class="input-group-btn">
+                  <button type="button" class="btn btn-info" ng-click='plus("strength")'>+</button>
+                  <button type="button" class="btn btn-info" ng-click='minus("strength")'>-</button>
+                </div>
+              </div>
+            </div>
+            <div>
+              <label for="id">體力</label>
+              <div class="input-group">
+                <input type="text" class="form-control" ng-model='ability.vitality' readonly>
+                <div class="input-group-btn">
+                  <button type="button" class="btn btn-info" ng-click='plus("vitality")'>+</button>
+                  <button type="button" class="btn btn-info" ng-click='minus("vitality")'>-</button>
+                </div>
+              </div>
+            </div>
+            <div>
+              <label for="id">敏捷</label>
+              <div class="input-group">
+                <input type="text" class="form-control" ng-model='ability.agility' readonly>
+                <div class="input-group-btn">
+                  <button type="button" class="btn btn-info" ng-click='plus("agility")'>+</button>
+                  <button type="button" class="btn btn-info" ng-click='minus("agility")'>-</button>
+                </div>
+              </div>
+            </div>
+            <div>
+              <label for="id">智慧</label>
+              <div class="input-group">
+                <input type="text" class="form-control" ng-model='ability.wisdom' readonly>
+                <div class="input-group-btn">
+                  <button type="button" class="btn btn-info" ng-click='plus("wisdom")'>+</button>
+                  <button type="button" class="btn btn-info" ng-click='minus("wisdom")'>-</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- 沒有輸入完點數就不可儲存 -->
+          <input type="submit" class="btn btn-info" ng-disabled="!checkForm(checkAbilitySet)" value="儲存" />
+          <button type="button" class="btn btn-info" ng-click="backList()">返回</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+    integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+    crossorigin="anonymous"></script>
+ <script src="./Ex54_create_role.js"></script>
+</body>
+
+</html>

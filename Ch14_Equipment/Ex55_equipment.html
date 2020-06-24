@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html ng-app='app'>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+    integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
+  <title>Create Role</title>
+  <style>
+    .main {
+      width: 60%;
+      padding: 100px 0 0 0;
+      margin: auto;
+    }
+  </style>
+</head>
+
+<body>
+  <div ng-controller='CharacterController' class="main">
+    <!-- 列表模式 -->
+    <table class="table table-hover" ng-show='isList'>
+      <tr>
+        <td>#</td>
+        <td>名稱</td>
+        <td>功能</td>
+      </tr>
+      <tr ng-repeat='item in characters'>
+        <td> {{ $index + 1}} </td>
+        <td> {{ item.name }} </td>
+        <td>
+          <!-- 點選進入角色資訊模式 -->
+          <a class="btn btn-info" ng-click="characterInfo(item)">
+            角色資訊
+          </a>
+        </td>
+      </tr>
+    </table>
+    <div ng-hide='isList'>
+      <ul class="nav nav-pills">
+        <li ng-click='setTab(1)' ng-class="{active:isTab(1)}">
+          <a>職業</a>
+        </li>
+        <!-- 有選職業時才出現裝備 -->
+        <li ng-click='setTab(2)' ng-show='checkNext(1)' ng-class="{active:isTab(2)}">
+          <a>裝備</a>
+        </li>
+        <!-- 有選裝備時才出現技能 -->
+        <li ng-click='setTab(3)' ng-show='checkNext(2)' ng-class="{active:isTab(3)}">
+          <a>技能</a>
+        </li>
+      </ul>
+      <div ng-if='isTab(1)'>
+        <!-- 顯示職業 -->
+        <select class="form-control" ng-model='characterBack.job' ng-options='e.key as e.name for e in job'>
+          <option value="">--請選擇職業--</option>
+        </select>
+        <!-- 有選擇職業才出現下一步 -->
+        <a class='btn btn-primary' ng-show='checkNext(1)' ng-click='setTab(2)'>下一步</a>
+      </div>
+      <div ng-if='isTab(2)'>
+        <!-- 顯示武器 -->
+        <select class="form-control" ng-model='characterBack.weapon'
+          ng-options="e.key as e.name for e in weapon | filter: {class: checkItem(characterBack.job, 'weapon')}">
+          <option value="">--請選擇武器--</option>
+        </select>
+        <!-- 顯示裝備 -->
+        <select class="form-control" ng-model='characterBack.armor'
+        ng-options="e.key as e.name for e in armor | filter: {class: checkItem(characterBack.job, 'armor')}">
+        <option value="">--請選擇裝備--</option>
+      </select>
+      <!-- 有穿裝備出現下一步 -->
+      <a class='btn btn-primary' ng-show='checkNext(2)' ng-click='setTab(3)'>下一步</a>
+      </div>
+      <div ng-if='isTab(3)'>
+        <!-- 顯示技能 -->
+        <select class="form-control" ng-model='characterBack.skill' ng-options='e.key as e.name for e in skill |filter: {class: checkItem(characterBack.job, "skill")}'>
+          <option value="">--請選擇技能--</option>
+        </select>
+        <!-- 有選擇技能才出現儲存 -->
+        <a class='btn btn-success' ng-show='checkNext(3)' ng-click='save()'>儲存</a>
+      </div>
+      <a class="btn btn-info" ng-click='backToList()'>回到選單</a>
+    </div>
+
+  </div>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+    integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+    crossorigin="anonymous"></script>
+  <script src="./Ex55_equipment.js"></script>
+</body>
+
+</html>
