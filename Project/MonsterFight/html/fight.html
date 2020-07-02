@@ -5,13 +5,20 @@
     <!-- 選擇角色 -->
     <table class="table" ng-hide='isBattle'>
       <tr>
-        <td>角色名稱</td>
-        <td>職業</td>
-        <td>功能</td>
+        <th>角色名稱</th>
+        <th>職業</th>
+        <th>屬性</th>
+        <th>功能</th>
       </tr>
       <tr ng-repeat='character in characters'>
         <td> {{ character.name }} </td>
         <td> {{ character.job | keyToName: Eq.job }} </td>
+        <td>
+          <div> 血量 :  {{ character.hp }}</div>
+          <div> 攻擊力 : {{ character.atk.min }} ~ {{ character.atk.max }} </div>
+          <div> 防禦力 : {{ character.def.value }} </div>
+          <div> 技能傷害 : {{ character.special.min }} ~ {{ character.special.max }} </div>
+        </td>
         <td>
           <!-- 點選選擇角色 -->
           <a class="btn btn-outline-secondary" ng-click="chooseFighter(character)">

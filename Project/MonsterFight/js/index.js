@@ -18,7 +18,7 @@
       redirectTo: '/'
     });
   }])
-  
+
   // LocalStorage
   app.service('localStorageService', function () {
     let self = this;
@@ -167,14 +167,16 @@
   app.factory('EquipmentFactory', function () {
     return {
       // job
-      job : [
+      job: [
+        { name: '尚未設定職業', key: 0, skill: 'undefined', weapon: 'undefined', armor: 'undefined'},
         { name: '戰士', key: 1, skill: 'warrior', weapon: 'sword', armor: 'heavy' },
         { name: '弓箭手', key: 2, skill: 'archer', weapon: 'bow', armor: 'medium' },
         { name: '幻術師', key: 3, skill: 'mesmer', weapon: 'scepter', armor: 'light' }
       ],
 
       // weapon
-      weapon : [
+      weapon: [
+        { name: '未選擇', key: 0, class: 'undefined', data: { min: 0, max: 0 } },
         { name: '短劍', key: 1, class: 'sword', data: { min: 1, max: 3 } },
         { name: '長劍', key: 2, class: 'sword', data: { min: 3, max: 5 } },
         { name: '雙手劍', key: 3, class: 'sword', data: { min: 5, max: 10 } },
@@ -189,7 +191,8 @@
         { name: '黃金杖', key: 12, class: 'scepter', data: { min: 7, max: 9 } }
       ],
       // armor
-      armor : [
+      armor: [
+        { name: '未選擇', key: 0, class: 'undefined', data: { value: 0 } },
         { name: '布袍', key: 1, class: 'light', data: { value: 20 } },
         { name: '法袍', key: 2, class: 'light', data: { value: 30 } },
         { name: '神聖法袍', key: 3, class: 'light', data: { value: 40 } },
@@ -202,7 +205,8 @@
       ],
 
       // skill
-      skill : [
+      skill: [
+        { name: '未選擇', key: 0, class: 'undefined', data: { min: 0, max: 0 } },
         { name: '重砍', key: 1, class: 'warrior', data: { min: 50, max: 80 } },
         { name: '穿刺射擊', key: 2, class: 'archer', data: { min: 30, max: 100 } },
         { name: '心靈震盪', key: 3, class: 'mesmer', data: { min: 60, max: 70 } }
@@ -324,48 +328,62 @@
       return self.fighter.id === character.id;
     };
 
-    self.boss = { name: '魔王', hp: 10000, skill: 3, atk: { min: 80, max: 120 }, def: { value: 40 }, special: { min: 150, max: 250 } };
+    self.boss = {
+      name: '魔王',
+      hp: 10000,
+      skill: 3,
+      atk: { min: 80, max: 120 },
+      def: { value: 40 },
+      special: { min: 150, max: 250 }
+    };
     // 備份魔王，重置時使用
     self.bossBack = angular.copy(self.boss);
 
+
+    // 腳色能力值
+    self.characters.forEach(character => {
+      console.log(character)
+      if(character.job){
+        // 血量
+        character.hp = character.ability.vitality * 100 || 100;
+        // 攻擊力
+        let atk = $filter('filter')(self.Eq.weapon, { key: character.weapon })[0].data;
+        character.atk = {}
+        // 防禦力
+        let def = $filter('filter')(self.Eq.armor, { key: character.armor })[0].data;
+        character.def = def
+        // 技能傷害
+        let special = $filter('filter')(self.Eq.skill, { key: character.skill })[0].data;
+        character.special = {};
+        switch (character.job) {
+          case 1:
+            // 戰士
+            character.atk.min = atk.min * character.ability.strength;
+            character.atk.max = atk.max * character.ability.strength;
+            character.special.min = special.min * character.ability.strength;
+            character.special.max = special.max * character.ability.strength;
+            break;
+          case 2:
+            // 弓箭手
+            character.atk.min = atk.min * character.ability.agility;
+            character.atk.max = atk.max * character.ability.agility;
+            character.special.min = special.min * character.ability.agility;
+            character.special.max = special.max * character.ability.agility;
+            break;
+          case 3:
+            // 幻術師
+            character.atk.min = atk.min * character.ability.wisdom;
+            character.atk.max = atk.max * character.ability.wisdom;
+            character.special.min = special.min * character.ability.wisdom;
+            character.special.max = special.max * character.ability.wisdom;
+            break;
+        } 
+      } 
+    })
     // 選擇角色計算能力值
     self.chooseFighter = function (character) {
       if (character.job) {
         self.fighter = angular.copy(character);
-        // 血量
-        self.fighter.hp = self.fighter.ability.vitality * 100;
-        // 攻擊力
-        let atk = $filter('filter')(self.Eq.weapon, { key: self.fighter.weapon })[0].data;
-        self.fighter.atk = {}
-        // 防禦力
-        let def = $filter('filter')(self.Eq.armor, { key: self.fighter.armor })[0].data;
-        self.fighter.def = def
-        // 技能傷害
-        let special = $filter('filter')(self.Eq.skill, { key: self.fighter.skill })[0].data;
-        self.fighter.special = {};
-        switch (self.fighter.job) {
-          case 1:
-            // 戰士
-            self.fighter.atk.min = atk.min * self.fighter.ability.strength;
-            self.fighter.atk.max = atk.max * self.fighter.ability.strength;
-            self.fighter.special.min = special.min * self.fighter.ability.strength;
-            self.fighter.special.max = special.max * self.fighter.ability.strength;
-            break;
-          case 2:
-            // 弓箭手
-            self.fighter.atk.min = atk.min * self.fighter.ability.agility;
-            self.fighter.atk.max = atk.max * self.fighter.ability.agility;
-            self.fighter.special.min = special.min * self.fighter.ability.agility;
-            self.fighter.special.max = special.max * self.fighter.ability.agility;
-            break;
-          case 3:
-            // 幻術師
-            self.fighter.atk.min = atk.min * self.fighter.ability.wisdom;
-            self.fighter.atk.max = atk.max * self.fighter.ability.wisdom;
-            self.fighter.special.min = special.min * self.fighter.ability.wisdom;
-            self.fighter.special.max = special.max * self.fighter.ability.wisdom;
-            break;
-        }
       } else {
         alert('尚未設定職業')
       }
