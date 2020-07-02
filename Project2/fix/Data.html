@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" ng-app="myApp">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+    integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+  <title>Data</title>
+  <style>
+    .circle {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+    }
+
+    .tags {
+      display: flex;
+    }
+  </style>
+</head>
+
+<body>
+  <div ng-controller='DataController'>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>index</th>
+          <th>name</th>
+          <th>age</th>
+          <th>picture</th>
+          <th>color</th>
+          <th>tags</th>
+          <th>friends</th>
+          <th></th>
+        </tr>
+      </thead>
+      <!-- 在取得資料時直接做 filter -->
+      <tbody ng-repeat='item in data'>
+        <tr>
+          <td ng-bind='$index'></td>
+          <!-- 直接資料輸出，不需要再 filter  -->
+          <td ng-bind='item.name.first + " " + item.name.last'></td>
+          <td ng-bind='item.age'></td>
+          <td><img ng-src="{{item.picture}}" alt=""></td>
+          <td><div class="circle" style="background-color:{{item.eyeColor}}"></div></td>
+          <td>
+            <div class="tags">
+              <button class="btn btn-secondary m-1" ng-repeat='tag in item.tags' ng-bind='tag'></button>
+            </div>
+          </td>
+          <td>
+            <!-- 直接利用 ol li 輸出 -->
+            <ol><li ng-repeat='friend in item.friends' ng-bind='friend.name'></li></ol>
+          </td>
+          <td>
+            <button class="btn btn-danger" ng-click='Del($index)'>Del</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <button class="btn btn-primary" ng-click='getData()'>取得資料</button>
+  </div>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+    integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+    crossorigin="anonymous"></script>
+  <script src="./Data.js"></script>
+</body>
+
+</html>

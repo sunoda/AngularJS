@@ -1,27 +1,28 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
-    <title>ng-mouseover & ng-mouseleave</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
+  <title>ng-mouseover & ng-mouseleave</title>
 </head>
 
 <body>
-    <div ng-app='myApp' ng-controller='AngularController as angular'>
-      <p ng-mouseover='angular.mouseOver=true' ng-mouseleave='angular.mouseOver=false'>
-        請將滑鼠移動到這裡
-      </p>
-      <p ng-show='angular.mouseOver'>滑鼠滑入才會顯示的字串</p>
-    </div>
-    <script>
-      (function(){
-        let app = angular.module('myApp', []);
-        app.controller('AngularController', function(){
-          this.mouseOver = false;
-        })
-      })();
-    </script>
+  <div ng-app='myApp' ng-controller='AngularController as angular'>
+    <p ng-mouseover='angular.mouseOver=true' ng-mouseleave='angular.mouseOver=false'>
+      請將滑鼠移動到這裡
+    </p>
+    <p ng-show='angular.mouseOver'>滑鼠滑入才會顯示的字串</p>
+  </div>
+  <script>
+    (function () {
+      let app = angular.module('myApp', []);
+      app.controller('AngularController', function () {
+        this.mouseOver = false;
+      })
+    })();
+  </script>
 </body>
 
 </html>

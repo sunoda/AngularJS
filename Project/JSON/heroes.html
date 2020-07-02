@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html ng-app='myApp'>
+
+<head>
+  <meta charset="utf-8">
+
+  <title>Our superheroes</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
+  <link href="https://fonts.googleapis.com/css?family=Faster+One" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div ng-controller='HeroController'>
+    <header>
+      <h1>{{ data.squadName }}</h1>
+      <p>Hometown: {{ data.homeTown}} //Formed{{ data.formed }} </p>
+    </header>
+
+    <section>
+      <article ng-repeat='member in data.members'>
+        <h2>{{member.name}} </h2>
+        <p>Secret identity: {{ member.secretIdentity }}</p>
+        <p>Age: {{ member.age }}</p>
+        <p>Superpowers:</p>
+        <ul>
+          <li ng-repeat='power in member.powers'>{{power}}</li>
+        </ul>
+
+      </article>
+    </section>
+  </div>
+  <script src="main.js"></script>
+  <script>
+    const header = document.querySelector('header');
+    const section = document.querySelector('section');
+
+
+
+  </script>
+</body>
+
+</html>

@@ -9,15 +9,15 @@
 </head>
 
 <body>
-  <div ng-app='myApp' ng-controller='AngularController as angular'>
-    <form ng-submit='angular.submit()'>
+  <div ng-app='myApp' ng-controller='AngularController'>
+    <form ng-submit='submit()'>
       <label>紅藥水</label>
       請輸入購買數量 :
-      <input type="text" ng-model='angular.red'>
+      <input type="text" ng-model='red'>
       <br>
       <label>藍藥水</label>
       請輸入購買數量 :
-      <input type="text" ng-model='angular.blue'>
+      <input type="text" ng-model='blue'>
       <br>
       <input type="submit" value="購買">
     </form>
@@ -35,18 +35,15 @@
         $scope.items = [];
         $scope.red = 0;
         $scope.blue = 0;
-        // console.log($scope.items)
-        this.submit = function () {
+        $scope.submit = function () {
           if ($scope.items.length == 0) {
             $scope.items.push({
-              red: +this.red,
-              blue: +this.blue
+              red: +$scope.red,
+              blue: +$scope.blue
             })
-            console.log($scope)
           } else {
-            console.log(($scope.items[0]))
-            $scope.items[0].red += +this.red;
-            $scope.items[0].blue += +this.blue;
+            $scope.items[0].red += +$scope.red;
+            $scope.items[0].blue += +$scope.blue;
           }
         }
       }])

@@ -1,0 +1,73 @@
+
+<html>
+<body>
+  <div ng-controller='CharacterController' class="main">
+    <!-- 列表模式 -->
+    <table class="table table-hover" ng-show='isList'>
+      <tr>
+        <td>#</td>
+        <td>名稱</td>
+        <td>功能</td>
+      </tr>
+      <tr ng-repeat='item in characters'>
+        <td> {{ $index + 1}} </td>
+        <td> {{ item.name }} </td>
+        <td>
+          <!-- 點選進入角色資訊模式 -->
+          <a class="btn btn-info" ng-click="characterInfo(item)">
+            角色資訊
+          </a>
+        </td>
+      </tr>
+    </table>
+    <div ng-hide='isList'>
+      <ul class="nav nav-pills">
+        <li ng-click='setTab(1)' class="btn btn-outline-secondary" ng-class="{active:isTab(1)}">
+          <a>職業</a>
+        </li>
+        <!-- 有選職業時才出現裝備 -->
+        <li ng-click='setTab(2)' class="btn btn-outline-secondary" ng-show='checkNext(1)' ng-class="{active:isTab(2)}">
+          <a>裝備</a>
+        </li>
+        <!-- 有選裝備時才出現技能 -->
+        <li ng-click='setTab(3)' class="btn btn-outline-secondary" ng-show='checkNext(2)' ng-class="{active:isTab(3)}">
+          <a>技能</a>
+        </li>
+      </ul>
+      <div ng-if='isTab(1)'>
+        <!-- 顯示職業 -->
+        <select class="form-control" ng-model='characterBack.job' ng-options='e.key as e.name for e in Eq.job'>
+          <option value="">--請選擇職業--</option>
+        </select>
+        <!-- 有選擇職業才出現下一步 -->
+        <a class='btn btn-primary' ng-show='checkNext(1)' ng-click='setTab(2)'>下一步</a>
+      </div>
+      <div ng-if='isTab(2)'>
+        <!-- 顯示武器 -->
+        <select class="form-control" ng-model='characterBack.weapon'
+          ng-options="e.key as e.name for e in Eq.weapon | filter: {class: checkItem(characterBack.job, 'weapon')}">
+          <option value="">--請選擇武器--</option>
+        </select>
+        <!-- 顯示裝備 -->
+        <select class="form-control" ng-model='characterBack.armor'
+        ng-options="e.key as e.name for e in Eq.armor | filter: {class: checkItem(characterBack.job, 'armor')}">
+        <option value="">--請選擇裝備--</option>
+      </select>
+      <!-- 有穿裝備出現下一步 -->
+      <a class='btn btn-primary' ng-show='checkNext(2)' ng-click='setTab(3)'>下一步</a>
+      </div>
+      <div ng-if='isTab(3)'>
+        <!-- 顯示技能 -->
+        <select class="form-control" ng-model='characterBack.skill' ng-options='e.key as e.name for e in Eq.skill |filter: {class: checkItem(characterBack.job, "skill")}'>
+          <option value="">--請選擇技能--</option>
+        </select>
+        <!-- 有選擇技能才出現儲存 -->
+        <a class='btn btn-success' ng-show='checkNext(3)' ng-click='save()'>儲存</a>
+      </div>
+      <a class="btn btn-info" ng-click='backToList()'>回到選單</a>
+    </div>
+
+  </div>
+</body>
+
+</html>

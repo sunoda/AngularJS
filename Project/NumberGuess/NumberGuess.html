@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh-TW" ng-app="myApp">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.0/angular.min.js"></script>
+  <title>終極密碼</title>
+  <style>
+    .main {
+      width: 60%;
+      padding: 100px 0 0 0;
+      margin: auto;
+    }
+  </style>
+</head>
+
+<body>
+  <div ng-controller='NumberController' class="main">
+    <h1>終極密碼</h1>
+    <form ng-submit='setRange()'>
+      <select ng-model='rangeCheck' ng-options='number for number in range'>
+        <option value="">--請選擇範圍--</option>
+      </select>
+      <button type="submit">確定</button>
+    </form>
+    <hr>
+    <form ng-submit='submit()'>
+      <label>請輸入您的數字:</label>
+      <input type="number" ng-model="guess" max="{{guesses.max}}">
+      <button type="submit" >確定</button>
+    </form>
+    <p>您的數字 : {{ guess ||  0}}</p>
+    <p ng-hide='bingo || between'>終極密碼 : {{ guesses.min}} ~ {{ guesses.max }}</p>
+    <p ng-if='error'>請輸入範圍內數字</p>
+    <p ng-if='bingo'>恭喜答對，終極密碼 : {{ number }}</p>
+    <p ng-if='between'>強迫中獎!! 只剩一個數字啦!! 終極密碼 : {{ number }}</p>
+  </div>
+  <script src="./NumberGuess.js"></script>
+</body>
+
+</html>
