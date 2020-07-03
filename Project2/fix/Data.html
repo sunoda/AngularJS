@@ -52,7 +52,7 @@
           </td>
           <td>
             <!-- 直接利用 ol li 輸出 -->
-            <ol><li ng-repeat='friend in item.friends' ng-bind='friend.name'></li></ol>
+            <div ng-repeat='friend in item.friends' ng-bind='$index+1 + ". " + friend.name'></div>
           </td>
           <td>
             <button class="btn btn-danger" ng-click='Del($index)'>Del</button>

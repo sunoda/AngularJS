@@ -144,7 +144,7 @@
       }
     };
     self.decrease = function (propertyName) {
-      self.plus(propertyName);
+      self.minus(propertyName);
       timeout = $timeout(() => {
         interval = $interval(() => {
           self.minus(propertyName);
@@ -220,7 +220,6 @@
     let propertyName = "RoleList";
     self.isList = true;
     self.Eq = EquipmentFactory;
-    console.log(self.Eq);
     // 角色
     self.characters = localStorageService.getProperty(propertyName);
     // 角色編輯備份
@@ -339,13 +338,11 @@
     // 備份魔王，重置時使用
     self.bossBack = angular.copy(self.boss);
 
-
     // 腳色能力值
     self.characters.forEach(character => {
-      console.log(character)
       if(character.job){
         // 血量
-        character.hp = character.ability.vitality * 100 || 100;
+        character.hp = character.ability.vitality * 100 + 100;
         // 攻擊力
         let atk = $filter('filter')(self.Eq.weapon, { key: character.weapon })[0].data;
         character.atk = {}

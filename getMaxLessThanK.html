@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    function getMaxLessThanK(n ,k) {
+    let max = 0;
+    for(let a = 1; a <= n; a++){
+        for(let b = a+1; b <= n; b++){
+            let a2 = +a.toString(2);
+            let b2 = +b.toString(2);
+            let t = (a2+b2).toString().split('').reverse()
+            if(t.includes('2')){
+                if(Math.pow(2, t.indexOf('2')) < k && Math.pow(2, t.indexOf('2')) > max){
+                    max = Math.pow(2, t.indexOf('2'));
+                }
+            }
+        }
+    }
+    return max
+}
+  </script>
+</body>
+</html>

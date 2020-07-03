@@ -12,7 +12,6 @@ app.controller('DataController', ['$scope', '$http', function ($scope, $http) {
   self.getData = function () {
     getAPI();
   };
-
   function getAPI() {
     $http.get('https://next.json-generator.com/api/json/get/4ymOIaXA_').then(
       function (res) {
